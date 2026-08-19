@@ -1,0 +1,163 @@
+/* === Variables === */
+
+:root {
+    --color-body: #06171E;
+    --color-surface: #09212B;
+    --color-accent: #FD5B4F;
+    --color-text: #FFFFFF;
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 32px;
+    --spacing-xl: 64px;
+    --radius-m: 12px;
+    --content-width: 1440px;
+    --photo-size: 150px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-body);
+}
+
+/* Hides content visually but keeps it for screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+/* === Layout === */
+
+.page-header {
+    width: 100%;
+    padding: var(--spacing-m) var(--spacing-xl);
+    background-color: var(--color-surface);
+}
+
+.brand-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+}
+
+.page-main {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-l);
+}
+
+.page-title {
+    margin-bottom: var(--spacing-xl);
+    font-size: 48px;
+    text-align: center;
+}
+
+.page-footer {
+    width: 100%;
+    padding: var(--spacing-l) var(--spacing-xl);
+    background-color: var(--color-surface);
+    text-align: center;
+}
+
+.academy-logo {
+    height: 32px;
+    width: auto;
+}
+
+.copyright {
+    margin-top: var(--spacing-s);
+}
+
+/* === Gallery === */
+
+.photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-l);
+    list-style: none;
+}
+
+/* Resets the browser button styling back to a plain image tile */
+.photo-card {
+    display: block;
+    width: var(--photo-size);
+    height: var(--photo-size);
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-m);
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.photo-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.photo-card:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.photo-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* === Overlay === */
+
+.image-overlay {
+    padding: var(--spacing-l);
+    border: none;
+    border-radius: var(--radius-m);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.image-overlay::backdrop {
+    background-color: rgba(6, 23, 30, 0.9);
+}
+
+/* === Media Queries === */
+
+@media (max-width: 768px) {
+
+    .page-header,
+    .page-footer {
+        padding: var(--spacing-m);
+    }
+
+    .page-main {
+        padding: var(--spacing-l) var(--spacing-m);
+    }
+
+    .page-title {
+        font-size: 28px;
+    }
+
+    .photo-gallery {
+        gap: var(--spacing-m);
+    }
+
+    .photo-card {
+        width: calc(50% - var(--spacing-s));
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}

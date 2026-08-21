@@ -1,34 +1,79 @@
 const PHOTO_PATH = './img/photos/';
 
 const photos = [
-  { file: 'photo-01.jpg', title: 'Glacier bay in Alaska' },
-  { file: 'photo-02.jpg', title: 'City street by night' },
-  { file: 'photo-03.jpg', title: 'Dark clouds before the storm' },
-  { file: 'photo-04.jpg', title: 'Blue tit on a branch' },
-  { file: 'photo-05.jpg', title: 'Hurricane seen from space' },
-  { file: 'photo-06.jpg', title: 'Mountain lake with reflection' },
-  { file: 'photo-07.jpg', title: 'Duck spreading its wings' },
-  { file: 'photo-08.jpg', title: 'Man standing at the shore' },
-  { file: 'photo-09.jpg', title: 'Snow bunting on a rock' },
-  { file: 'photo-10.jpg', title: 'Snow leopard cub' },
-  { file: 'photo-11.jpg', title: 'Mountain range at sunrise' },
-  { file: 'photo-12.jpg', title: 'Frozen tree in the snow' }
+  'photo-01.jpg',
+  'photo-02.jpg',
+  'photo-03.jpg',
+  'photo-04.jpg',
+  'photo-05.jpg',
+  'photo-06.jpg',
+  'photo-07.jpg',
+  'photo-08.jpg',
+  'photo-09.jpg',
+  'photo-10.jpg',
+  'photo-11.jpg',
+  'photo-12.jpg',
 ];
 
-/**
- * Creates the HTML for a single photo card.
- * @param {Object} photo - One entry of the photos array.
- * @param {number} index - Position of the photo inside the array.
- * @returns {string} The HTML string of the list item.
- */
-function getPhotoTemplate(photo, index) {
-  return '';
+const photoTitles = [
+  'Glacier bay in Alaska',
+  'City street by night',
+  'Dark clouds before the storm',
+  'Blue tit on a branch',
+  'Hurricane seen from space',
+  'Mountain lake with reflection',
+  'Duck spreading its wings',
+  'Man standing at the shore',
+  'Snow bunting on a rock',
+  'Snow leopard cub',
+  'Mountain range at sunrise',
+  'Frozen tree in the snow',
+];
+
+const dialogRef = document.getElementById ('image-overlay');
+const dialogImg = document.getElementById ('dialog-image');
+const closeBtn = document.getElementById ('close-dialog-btn');
+
+closeBtn.addEventListener ('click', closeDialog);
+
+function getPhotoTemplate (photo, title, index) {
+  return `
+    <li class="photo-card">
+      <button onclick="openDialog(${index})">
+        <img
+          class="photo-image"
+          src="${PHOTO_PATH}${photo}"
+          alt="${title}"
+        >
+      </button>
+    </li>
+  `;
 }
 
 /**
- * Renders all photos into the gallery container.
+ * shows all photos
  */
-function render() {
-  const contentRef = document.getElementById('fotogram-content');
+function render () {
+  const contentRef = document.getElementById ('fotogram-content');
   contentRef.innerHTML = '';
+
+  for (let i = 0; i < photos.length; i++) {
+    contentRef.innerHTML += getPhotoTemplate (photos[i], photoTitles[i], i);
+  }
 }
+
+function openDialog (index) {
+  dialogImg.src = `${PHOTO_PATH}${photos[index]}`;
+  dialogImg.alt = photoTitles[index];
+
+  dialogRef.showModal ();
+}
+
+function closeDialog () {
+  dialogRef.close ();
+
+  dialogImg.src = '';
+  dialogImg.alt = '';
+}
+
+render ();

@@ -10,7 +10,7 @@
     <script src="./script.js" defer></script>
 </head>
 
-<body onload="render()">
+<body>
 
     <header class="page-header">
         <img class="brand-logo" src="./img/logo-fotogram.png" alt="Fotogram">
@@ -18,6 +18,7 @@
 
     <main class="page-main">
         <h1 class="page-title">Your personal photo album</h1>
+
         <section class="gallery-section">
             <h2 class="visually-hidden">Photo gallery</h2>
             <ul class="photo-gallery" id="fotogram-content"></ul>
@@ -29,7 +30,11 @@
         <p class="copyright">&copy; 2023 Developer Akademie GmbH</p>
     </footer>
 
-    <dialog class="image-overlay" id="image-overlay"></dialog>
+    <dialog class="image-overlay" id="image-overlay">
+        <button id="close-dialog-btn">Close</button>
+
+        <img id="dialog-image" alt="">
+    </dialog>
 
 </body>
 

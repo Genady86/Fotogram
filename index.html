@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Fotogram is a responsive personal photo gallery with accessible image navigation.">
     <title>Fotogram — Your personal photo album</title>
     <link rel="icon" href="./img/logo-fotogram.png">
     <link rel="stylesheet" href="./style.css">
@@ -23,6 +25,14 @@
             <h2 class="visually-hidden">Photo gallery</h2>
             <ul class="photo-gallery" id="fotogram-content"></ul>
         </section>
+
+        <aside class="visually-hidden">
+            <h2>Photo viewer help</h2>
+            <p>
+                <strong>Tip:</strong>
+                Use the left and right arrow keys to browse the photos.
+            </p>
+        </aside>
     </main>
 
     <footer class="page-footer">
@@ -30,10 +40,46 @@
         <p class="copyright">&copy; 2023 Developer Akademie GmbH</p>
     </footer>
 
-    <dialog class="image-overlay" id="image-overlay">
-        <button id="close-dialog-btn">Close</button>
+    <dialog id="dialog" class="photo-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+        <section class="dialog-content">
 
-        <img id="dialog-image" alt="">
+            <header class="dialog-header">
+                <h2 id="dialog-title" class="dialog-title">Photo detail</h2>
+
+                <button id="close-button" class="dialog-close" type="button" aria-label="Close photo">
+                    &times;
+                </button>
+            </header>
+
+            <p id="dialog-description" class="dialog-description"></p>
+            <img id="dialog-image" class="dialog-image" alt="Selected photo">
+
+            <nav class="dialog-controls" aria-label="Photo navigation">
+                <ul class="dialog-navigation-list">
+
+                    <li>
+                        <button id="previous-button" class="dialog-navigation" type="button"
+                            aria-label="Previous photo">
+                            <img class="dialog-arrow" src="./img/arrow-left.png" alt="">
+                        </button>
+                    </li>
+
+                    <li>
+                        <span id="dialog-counter" class="dialog-counter">
+                            1/12
+                        </span>
+                    </li>
+
+                    <li>
+                        <button id="next-button" class="dialog-navigation" type="button" aria-label="Next photo">
+                            <img class="dialog-arrow" src="./img/arrow-right.png" alt="">
+                        </button>
+                    </li>
+
+                </ul>
+            </nav>
+
+        </section>
     </dialog>
 
 </body>

@@ -1,15 +1,13 @@
-/* === Variables === */
-
 :root {
     --color-body: #06171e;
     --color-surface: #09212b;
     --color-accent: #fd5b4f;
     --color-text: #ffffff;
+    --color-text-muted: #f5f5f5;
     --spacing-s: 8px;
     --spacing-m: 16px;
     --spacing-l: 32px;
     --spacing-xl: 64px;
-    --radius-m: 12px;
     --content-width: 1440px;
     --photo-size: 150px;
 }
@@ -21,6 +19,10 @@
 }
 
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.5;
@@ -28,7 +30,6 @@ body {
     background-color: var(--color-body);
 }
 
-/* Hides content visually but keeps it for screen readers */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -37,37 +38,69 @@ body {
     clip-path: inset(50%);
 }
 
-/* === Layout === */
-
 .page-header {
     width: 100%;
-    padding: var(--spacing-m) var(--spacing-xl);
+    padding: 16px 140px;
     background-color: var(--color-surface);
 }
 
 .brand-logo {
     display: block;
-    height: 40px;
+    height: 48px;
     width: auto;
 }
 
 .page-main {
-    max-width: var(--content-width);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-l);
+    padding: 160px 32px;
 }
 
 .page-title {
-    margin-bottom: var(--spacing-xl);
-    font-size: 48px;
+    margin-bottom: 64px;
+    font-size: 56px;
     text-align: center;
 }
 
 .page-footer {
+    position: relative;
+
     width: 100%;
     padding: var(--spacing-l) var(--spacing-xl);
-    background-color: var(--color-surface);
+
+    background-color: transparent;
     text-align: center;
+
+    isolation: isolate;
+}
+
+.page-footer::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+
+    left: 0;
+    right: 0;
+    top: 25px;
+    bottom: 0;
+
+    background-color: var(--color-surface);
+}
+
+.page-footer::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background-color: var(--color-surface);
 }
 
 .academy-logo {
@@ -76,33 +109,47 @@ body {
 }
 
 .copyright {
-    margin-top: var(--spacing-s);
+    margin-top: 8px;
+    color: #99acb3;
 }
-
-/* === Gallery === */
 
 .photo-gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--spacing-l);
+    column-gap: 16px;
+    row-gap: 48px;
     list-style: none;
 }
 
 .photo-card {
     width: var(--photo-size);
     height: var(--photo-size);
-    border: 3px solid #193944;
-    border-radius: 14px;
+    border: 2px solid #124658;
+    border-radius: 16px;
     overflow: hidden;
 }
 
 .photo-card button {
+    display: block;
     width: 100%;
     height: 100%;
     padding: 0;
     border: none;
-    background: none;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+}
+
+.photo-card button:focus-visible {
+    outline: 3px solid var(--color-text);
+    outline-offset: -4px;
+}
+
+.photo-article,
+.photo-figure {
+    width: 100%;
+    height: 100%;
 }
 
 .photo-image {
@@ -113,8 +160,7 @@ body {
 }
 
 .photo-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border-color: #6bc1e1;
 }
 
 .photo-card:focus-within {
@@ -122,48 +168,181 @@ body {
     outline-offset: 3px;
 }
 
-/* === Overlay === */
+.photo-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
 
-.image-overlay {
-    width: min(900px, 90vw);
-    max-height: 90vh;
-    padding: var(--spacing-l);
-    border: 3px solid #193944;
-    border-radius: var(--radius-m);
+    width: 688px;
+    height: 675px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 40px;
+    overflow: hidden;
+
+    background-color: transparent;
+    color: var(--color-text);
+
+    transform: translate(-50%, -50%);
+}
+
+.photo-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dialog-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 48px;
     background-color: var(--color-surface);
+    border-radius: 40px;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 560px;
+    max-width: 100%;
+    height: 32px;
+}
+
+.dialog-title {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+
     color: var(--color-text);
 }
 
-.image-overlay::backdrop {
-    background-color: rgba(6, 23, 30, 0.9);
-}
+.dialog-description {
+    position: absolute;
+    top: 98px;
+    left: 64px;
 
-#dialog-image {
-    display: block;
-    width: 100%;
-    max-height: 75vh;
-    object-fit: contain;
-    border-radius: var(--radius-m);
-}
+    width: 560px;
+    max-width: calc(100% - 128px);
 
-#close-dialog-btn {
-    display: block;
-    margin-left: auto;
-    margin-bottom: var(--spacing-m);
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--color-accent);
-    color: white;
+    margin: 0;
+
+    color: var(--color-text-muted);
+
     font-size: 16px;
+    line-height: 20px;
+
+    opacity: 0.75;
+}
+
+.dialog-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 4px;
+    border: none;
+    border-radius: 50%;
+
+    background-color: transparent;
+    color: var(--color-text);
+
+    font-size: 26px;
+    line-height: 1;
+
     cursor: pointer;
 }
 
-#close-dialog-btn:hover {
-    opacity: 0.8;
+.dialog-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* === Media Queries === */
+.dialog-image {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    aspect-ratio: 560 / 375;
+    object-fit: cover;
+    margin-top: 48px;
+}
+
+.dialog-controls {
+    width: 261px;
+    height: 60px;
+
+    margin-top: 48px;
+}
+
+.dialog-navigation-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    gap: 56px;
+
+    list-style: none;
+}
+
+.dialog-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 60px;
+    height: 60px;
+
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(253, 91, 79, 0.1);
+
+    cursor: pointer;
+}
+
+.dialog-arrow {
+    width: 24px;
+    height: 24px;
+}
+
+.dialog-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 29px;
+    height: 16px;
+
+    color: var(--color-text-muted);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+
+    text-align: center;
+}
+
+.dialog-close:focus-visible,
+.dialog-navigation:focus-visible {
+    outline: 3px solid var(--color-text);
+    outline-offset: 3px;
+}
 
 @media (max-width: 768px) {
     .page-header,
@@ -186,6 +365,75 @@ body {
     .photo-card {
         width: calc(50% - var(--spacing-s));
         height: auto;
+
         aspect-ratio: 1 / 1;
+    }
+
+    .photo-dialog {
+        width: calc(100vw - 24px);
+        height: auto;
+        max-width: 343px;
+        max-height: calc(100vh - 24px);
+    }
+
+    .dialog-content {
+        height: auto;
+        min-height: 600px;
+
+        padding: 32px 20px;
+
+        border-radius: 32px;
+    }
+
+    .dialog-header {
+        width: 100%;
+        height: auto;
+    }
+
+    .dialog-title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .dialog-description {
+        position: static;
+
+        width: 100%;
+        max-width: none;
+
+        margin-top: 12px;
+
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .dialog-image {
+        width: 100%;
+        height: auto;
+
+        margin-top: 24px;
+
+        aspect-ratio: 560 / 375;
+    }
+
+    .dialog-controls {
+        width: auto;
+        height: 52px;
+
+        margin-top: 32px;
+    }
+
+    .dialog-navigation-list {
+        gap: 32px;
+    }
+
+    .dialog-navigation {
+        width: 52px;
+        height: 52px;
+    }
+
+    .dialog-arrow {
+        width: 22px;
+        height: 22px;
     }
 }

@@ -45,6 +45,19 @@ Fotogram/
 │   └── arrow-right.png
 └── README.md
 ```
+## Screenshots
+
+### Galerie
+
+![Fotogram Galerie](docs/screenshots/fotogram-gallery.png)
+
+### Detailansicht
+
+![Fotogram Detailansicht](docs/screenshots/fotogram-dialog.png)
+
+### Mobile Ansicht
+
+![Fotogram Mobile Ansicht](docs/screenshots/fotogram-mobile.png)
 
 ### index.html
 

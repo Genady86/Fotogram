@@ -55,9 +55,16 @@ const closeBtn = document.getElementById('close-button');
 const previousBtn = document.getElementById('previous-button');
 const nextBtn = document.getElementById('next-button');
 const dialogDescription = document.getElementById('dialog-description');
-
 const dialogCounter = document.getElementById('dialog-counter');
 
+/**
+ * Creates the HTML template for one photo card.
+ *
+ * @param {string} photo - Filename of the photo.
+ * @param {string} title - Title and alternative text of the photo.
+ * @param {number} index - Position of the photo in the PHOTOS array.
+ * @returns {string} HTML markup for one photo card.
+ */
 function getPhotoTemplate(photo, title, index) {
     return `
     <li class="photo-card">
@@ -73,6 +80,11 @@ function getPhotoTemplate(photo, title, index) {
   `;
 }
 
+/**
+ * Renders all photos into the gallery.
+ *
+ * @returns {void}
+ */
 function render() {
     const contentRef = document.getElementById('fotogram-content');
 
@@ -83,6 +95,12 @@ function render() {
     }
 }
 
+/**
+ * Opens the photo dialog for the selected photo.
+ *
+ * @param {number} index - Index of the selected photo.
+ * @returns {void}
+ */
 function openDialog(index) {
     currentIndex = index;
 
@@ -91,15 +109,24 @@ function openDialog(index) {
     dialogRef.showModal();
 }
 
+/**
+ * Updates the dialog with the currently selected photo.
+ *
+ * @returns {void}
+ */
 function updateDialog() {
     dialogImg.src = FULL_PHOTO_PATH + PHOTOS[currentIndex];
     dialogImg.alt = PHOTO_TITLES[currentIndex];
     dialogTitle.textContent = PHOTO_TITLES[currentIndex];
     dialogDescription.textContent = PHOTO_DESCRIPTIONS[currentIndex];
-
     dialogCounter.textContent = `${currentIndex + 1}/${PHOTOS.length}`;
 }
 
+/**
+ * Shows the previous photo and wraps to the last photo when necessary.
+ *
+ * @returns {void}
+ */
 function showPreviousPhoto() {
     currentIndex--;
 
@@ -110,6 +137,11 @@ function showPreviousPhoto() {
     updateDialog();
 }
 
+/**
+ * Shows the next photo and wraps to the first photo when necessary.
+ *
+ * @returns {void}
+ */
 function showNextPhoto() {
     currentIndex++;
 
@@ -120,10 +152,20 @@ function showNextPhoto() {
     updateDialog();
 }
 
+/**
+ * Closes the photo dialog.
+ *
+ * @returns {void}
+ */
 function closeDialog() {
     dialogRef.close();
 }
 
+/**
+ * Resets the dialog content after it has been closed.
+ *
+ * @returns {void}
+ */
 function clearDialog() {
     dialogImg.removeAttribute('src');
     dialogImg.alt = 'Selected photo';
